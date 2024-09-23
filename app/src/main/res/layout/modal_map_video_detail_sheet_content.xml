@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:id="@+id/standard_bottom_sheet"
+        style="@style/Widget.Material3.BottomSheet"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center|top"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+        >
+
+        <com.google.android.material.bottomsheet.BottomSheetDragHandleView
+            android:id="@+id/drag_handle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <LinearLayout
+            android:id="@+id/no_details_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="20dp"
+            android:visibility="gone"
+            android:gravity="center">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="?attr/colorPrimary"
+                android:textSize="16sp"
+                android:text="@string/no_details_video"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/details_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginBottom="20dp">
+            <TextView
+                android:id="@+id/username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/comments_lable"
+                android:textColor="?attr/colorPrimary"
+                android:textSize="16sp"
+                tools:text="Username: User"/>
+
+            <TextView
+                android:id="@+id/video_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="?attr/colorPrimary"
+                android:textSize="16sp"
+                android:layout_marginTop="10dp"
+                tools:text="Comment"/>
+
+            <TextView
+                android:id="@+id/video_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="?attr/colorPrimary"
+                android:textSize="16sp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="30dp"
+                tools:text="Comment"/>
+            <include android:id="@+id/fav_video" layout="@layout/fav_video_item"/>
+        </LinearLayout>
+
+
+    </LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+

@@ -1,0 +1,34 @@
+<resources>
+
+    <string name="app_name">Video App</string>
+    <string name="title_feed">Feed</string>
+    <string name="title_profile">Profile</string>
+    <string name="dialog_login_title">You are not registered yet</string>
+    <string name="dialog_login_login_continue">Sign Up</string>
+    <string name="dialog_login_guest_continue">Continue as Guest</string>
+    <string name="login_lable">Login</string>
+    <string name="profile_username">Username: %1$s</string>
+    <string name="logout_lable">Logout</string>
+    <string name="videos_on_map">Go to Map</string>
+    <string name="map">Map</string>
+    <string name="watched_videos_title">All the videos they have watched</string>
+    <string name="no_fav_videos">You don\'t have favorites videos</string>
+    <string name="fav_videos_lable">Your favorites videos</string>
+    <string name="title_favorites">Favorites</string>
+    <string name="comments_lable">Comments</string>
+    <string name="comments_for_video">Comments for video: %1$s</string>
+    <string name="location_lable">Location</string>
+    <string name="logged_in_lable">You are logged in</string>
+    <string name="sign_in_success_lable">Sign in Success</string>
+    <string name="sign_out_success_lable">Sign Out Success</string>
+    <string name="remove_video_from_fav_lable">Video remove from Favorites</string>
+    <string name="login_for_like_lable">Please login for like video</string>
+    <string name="video_no_location_lable">Video don\'t have location</string>
+    <string name="video_saved_to_fav_lable">Video saved to Favourites</string>
+    <string name="no_details_video">No details</string>
+    <string name="video_description">Description: %1$s</string>
+    <string name="video_location">Location: %1$s</string>
+    <string name="undefined">Undefined</string>
+    <string name="reset_watched_message">All watched videos are reset</string>
+
+</resources>

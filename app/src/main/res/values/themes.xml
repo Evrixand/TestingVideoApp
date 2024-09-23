@@ -1,0 +1,11 @@
+<resources >
+    <style name="Theme.TestingVideoApp" parent="Theme.Material3.DayNight.NoActionBar">
+
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimaryVariant">@color/black</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <item name="colorOnContainer">@color/white_transparent</item>
+
+    </style>
+</resources>
