@@ -35,5 +35,5 @@ ____
 #### Additional options
 
 + Once logged in, the user will have access to a **Profile** page with user details such as username and photo.
-+ Profile page have feed of Favorites videos.
++ Profile page have Favorites videos.
 ____ 
