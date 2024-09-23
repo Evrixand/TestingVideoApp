@@ -31,10 +31,9 @@ android {
         manifestPlaceholders["MAPS_API_KEY"] = project.properties["MAPS_API_KEY"] ?: ""
 
         val webClientId = keystoreProperties["WEB_CLIENT_ID"] as String?
+            ?: project.properties["WEB_CLIENT_ID"].toString()
 
-        buildConfigField("String", "WEB_CLIENT_ID",
-            (webClientId ?: project.properties["WEB_CLIENT_ID"]).toString()
-        )
+        buildConfigField("String", "WEB_CLIENT_ID", webClientId)
     }
 
     compileOptions {
@@ -52,7 +51,7 @@ android {
 
 dependencies {
 
-    implementation (libs.play.services.auth)
+    implementation(libs.play.services.auth)
 
     implementation(platform(libs.koin.bom))
     implementation(libs.koin.core)
@@ -62,17 +61,17 @@ dependencies {
     implementation(libs.androidx.media3.exoplayer.dash)
     implementation(libs.androidx.media3.ui)
 
-    implementation (libs.picasso)
+    implementation(libs.picasso)
 
-    implementation (libs.play.services.maps)
+    implementation(libs.play.services.maps)
 
     implementation(libs.play.services.auth)
     implementation(libs.googleid)
 
     implementation(libs.gson)
 
-    implementation (libs.androidx.credentials)
-    implementation (libs.androidx.credentials.play.services.auth)
+    implementation(libs.androidx.credentials)
+    implementation(libs.androidx.credentials.play.services.auth)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
