@@ -11,64 +11,53 @@ class VideoRepositoryImpl(
     private val userRepository: UserRepository
 ) : VideoRepository {
 
-    override fun getAllVideos(): List<VideoComplete>  {
+    override fun getAllVideos(): List<VideoComplete> {
 
-        val videos = supportVideoDataRepository.getTestVideos()
+        val testVideos = supportVideoDataRepository.getTestVideos()
 
-        val list = mutableListOf<VideoComplete>()
+        val result = mutableListOf<VideoComplete>()
+
         val fakeUsers = userRepository.getFakeUsers()
-        val favoriteVideos = getFavoriteVideos()
 
-        if (videos.isNotEmpty()){
+        val favList = supportVideoDataRepository.getFavVideosFromPref()
 
-            videos.forEach {
+        if (testVideos.isNotEmpty()) {
 
-                val findVideo = favoriteVideos.find { i -> i.video.videoId == it.videoId }
+            testVideos.forEach { video ->
 
-                val isFav = findVideo != null
+                val videoUri = Uri.parse(video.filePath)
 
-                val user = fakeUsers.find { i -> i.userId == it.userId }
+                val isFav = favList.contains(video.videoId )
+
+                val user = fakeUsers.find { i -> i.userId == video.userId }
 
                 if (user != null) {
-                    list.add(VideoComplete(video = it, user = user, comments = emptyList(), thumbnail = null, isFavourite = isFav))
+                    result.add(
+                        VideoComplete(
+                            video = video,
+                            user = user,
+                            comments = emptyList(),
+                            thumbnail = supportVideoDataRepository.getVideoThumbnail(videoUri = videoUri),
+                            isFavourite = isFav
+                        )
+                    )
                 }
             }
         }
 
-        return list
+        return result
     }
 
-    override fun getFavoriteVideos(): List<VideoComplete> {
+    override fun getFavoriteVideos(): List<VideoComplete> =
+        getAllVideos().filter { v -> v.isFavourite }
 
-        val list = supportVideoDataRepository.getTestVideos()
+    override fun getWatchedVideos(): List<VideoComplete> {
 
-        val favList = supportVideoDataRepository.getFavVideosFromPref()
+        val allVideos = getAllVideos()
 
-        val users = userRepository.getFakeUsers()
+        val watchedVideos = supportVideoDataRepository.getWatchedVideosFromPref()
 
-        val favoriteVideos = mutableListOf<VideoComplete>()
-
-        favList.forEach { vId ->
-
-            val findVideo = list.find { v -> v.videoId == vId }
-
-            if (findVideo != null) {
-                val videoUri = Uri.parse(findVideo.filePath)
-
-                val findUser = users.find { i -> i.userId == findVideo.userId }
-
-                favoriteVideos.add(
-                    VideoComplete(
-                        video = findVideo,
-                        thumbnail = supportVideoDataRepository.getVideoThumbnail(videoUri =  videoUri),
-                        user = findUser!!,
-                        comments = emptyList(),
-                        isFavourite = true
-                    )
-                )
-            }
-        }
-        return favoriteVideos
+        return allVideos.filter { it.video.videoId in watchedVideos }
     }
 
     override fun addVideoToFav(videoId: Int): CompletableFuture<Result> {
@@ -114,11 +103,16 @@ class VideoRepositoryImpl(
 
             newList.addAll(curList)
 
-            newList.remove(videoId)
+            val index = newList.indexOf(videoId)
 
-            supportVideoDataRepository.saveFavVideosFromPref(videoIds = newList)
+            if (index != -1) {
 
-            future.complete(Result.Success)
+                newList.removeAt(index)
+
+                supportVideoDataRepository.saveFavVideosFromPref(videoIds = newList)
+
+                future.complete(Result.Success)
+            }
 
         } catch (e: Exception) {
 
@@ -158,48 +152,12 @@ class VideoRepositoryImpl(
         return future
     }
 
-    override fun getWatchedVideos(): List<VideoComplete> {
-
-        val list = supportVideoDataRepository.getTestVideos()
-
-        val watchedVideos = supportVideoDataRepository.getWatchedVideosFromPref()
-
-        val users = userRepository.getFakeUsers()
-
-        val favoriteVideos = mutableListOf<VideoComplete>()
-
-        watchedVideos.forEach { vId ->
-
-            val findVideo = list.find { v -> v.videoId == vId }
-
-            if (findVideo != null) {
-                val videoUri = Uri.parse(findVideo.filePath)
-
-                val findUser = users.find { i -> i.userId == findVideo.userId }
-
-                favoriteVideos.add(
-                    VideoComplete(
-                        video = findVideo,
-                        thumbnail = supportVideoDataRepository.getVideoThumbnail(videoUri =  videoUri),
-                        user = findUser!!,
-                        comments = emptyList(),
-                        isFavourite = true
-                    )
-                )
-            }
-        }
-        return favoriteVideos
-    }
-
-    override fun savePositionLastVideo(position: Int) {
+    override fun savePositionLastVideo(position: Int) =
         supportVideoDataRepository.savePositionLastVideo(position = position)
-    }
-    override fun getPositionLastVideo(): Int {
-        return supportVideoDataRepository.getPositionLastVideo()
-    }
 
-    override fun resetWatchedVideos(): CompletableFuture<Result> {
-        return supportVideoDataRepository.resetWatchedVideos()
-    }
+    override fun getPositionLastVideo(): Int =
+        supportVideoDataRepository.getPositionLastVideo()
 
+    override fun resetWatchedVideos(): CompletableFuture<Result> =
+        supportVideoDataRepository.resetWatchedVideos()
 }
