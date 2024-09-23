@@ -2,7 +2,7 @@
 
 #### How to Set Up the App
 
-   **Requirements:** Android Studio, Android SDK, Google API key for Maps, Google.
+   **Requirements:** Android Studio, Android SDK, Google API key for Maps, Google web api id.
    
    **Steps:**
    1. Clone the project repository.
